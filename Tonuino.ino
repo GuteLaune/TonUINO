@@ -1024,7 +1024,7 @@ void loop() {
 #endif
       }
       else {
-        playShortCut(1);
+        playShortCut(4);
       }
       ignoreUpButton = true;
     }
@@ -1051,7 +1051,7 @@ void loop() {
 #endif
       }
       else {
-        playShortCut(2);
+        playShortCut(5);
       }
       ignoreDownButton = true;
 
@@ -1078,7 +1078,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(4);
+        playShortCut(1);
       }
     }
     if (buttonFive.wasReleased()) {
@@ -1091,7 +1091,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(5);
+        playShortCut(2);
       }
     }
 #endif
