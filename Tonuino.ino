@@ -18,7 +18,7 @@
 */
 
 // uncomment the below line to enable five button support
-//#define FIVEBUTTONS
+#define FIVEBUTTONS
 
 static const uint32_t cardCookie = 322417479;
 
@@ -59,7 +59,7 @@ struct adminSettings {
   bool locked;
   long standbyTimer;
   bool invertVolumeButtons;
-  folderSettings shortCuts[4];
+  folderSettings shortCuts[6];
   uint8_t adminMenuLocked;
   uint8_t adminMenuPin[4];
 };
@@ -158,6 +158,8 @@ void resetSettings() {
   mySettings.shortCuts[1].folder = 0;
   mySettings.shortCuts[2].folder = 0;
   mySettings.shortCuts[3].folder = 0;
+  mySettings.shortCuts[4].folder = 0;
+  mySettings.shortCuts[5].folder = 0;
   mySettings.adminMenuLocked = 0;
   mySettings.adminMenuPin[0] = 1;
   mySettings.adminMenuPin[1] = 1;
@@ -739,6 +741,7 @@ void setup() {
   Serial.println(F("TonUINO Version 2.1"));
   Serial.println(F("created by Thorsten Voß and licensed under GNU/GPL."));
   Serial.println(F("Information and contribution at https://tonuino.de.\n"));
+  Serial.println(F("GuteLaune 6 Shortcuts"));
 
   // Busy Pin
   pinMode(busyPin, INPUT);
@@ -1010,21 +1013,22 @@ void loop() {
     }
 
     if (upButton.pressedFor(LONG_PRESS)) {
-#ifndef FIVEBUTTONS
       if (isPlaying()) {
+#ifndef FIVEBUTTONS
         if (!mySettings.invertVolumeButtons) {
           volumeUpButton();
         }
         else {
           nextButton();
         }
+#endif
       }
       else {
         playShortCut(1);
       }
       ignoreUpButton = true;
-#endif
-    } else if (upButton.wasReleased()) {
+    }
+    else if (upButton.wasReleased()) {
       if (!ignoreUpButton)
         if (!mySettings.invertVolumeButtons) {
           nextButton();
@@ -1036,20 +1040,22 @@ void loop() {
     }
 
     if (downButton.pressedFor(LONG_PRESS)) {
-#ifndef FIVEBUTTONS
       if (isPlaying()) {
+#ifndef FIVEBUTTONS
         if (!mySettings.invertVolumeButtons) {
           volumeDownButton();
         }
         else {
           previousButton();
         }
+#endif
       }
       else {
         playShortCut(2);
       }
       ignoreDownButton = true;
-#endif
+
+
     } else if (downButton.wasReleased()) {
       if (!ignoreDownButton) {
         if (!mySettings.invertVolumeButtons) {
@@ -1072,7 +1078,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(1);
+        playShortCut(4);
       }
     }
     if (buttonFive.wasReleased()) {
@@ -1085,7 +1091,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(2);
+        playShortCut(5);
       }
     }
 #endif
@@ -1232,7 +1238,7 @@ void adminMenu(bool fromCard = false) {
     }
   }
   else if (subMenu == 7) {
-    uint8_t shortcut = voiceMenu(4, 940, 940);
+    uint8_t shortcut = voiceMenu(6, 940, 940);
     setupFolder(&mySettings.shortCuts[shortcut - 1]);
     mp3.playMp3FolderTrack(400);
   }
