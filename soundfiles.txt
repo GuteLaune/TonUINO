@@ -21,6 +21,9 @@ mp3/0319_special_party.mp3|Spezialmodus Von-Bis, Party: Alle Dateien zwischen de
 mp3/0320_select_file.mp3|OK, wähle nun bitte die Datei mit den Lautstärketasten aus.
 mp3/0321_select_first_file.mp3|OK, wähle nun bitte die Startdatei mit den Lautstärketasten aus.
 mp3/0322_select_last_file.mp3|Wähle nun bitte die Enddatei mit den Lautstärketasten aus.
+mp3/0323_Endlosmodus.mp3|Soll der Titel in Endlosschleife laufen?
+mp3/0324_Nein.mp3|Nein
+mp3/0325_Ja.mp3|Ja
 #mp3/0330.mp3|Soll ich vor einer Datei jeweils die Nummer ansagen? Du kannst jederzeit durch einen langen Druck auf die Pausetaste die aktuelle Nummer abfragen.
 #mp3/0331.mp3|Nein, Nummer nicht ansagen.
 #mp3/0332.mp3|Ja, Nummer ansagen.

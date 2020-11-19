@@ -561,9 +561,16 @@ static void nextTrack(uint16_t track) {
   }
 
   if (myFolder->mode == 4) {
-    Serial.println(F("Einzel Modus aktiv -> Strom sparen"));
-    //    mp3.sleep();      // Je nach Modul kommt es nicht mehr zurück aus dem Sleep!
-    setstandbyTimer();
+    if (myFolder->special2 == 2) { //Endlosschleife
+      Serial.println(F("Einzelmodus Endloswiedergabe -> Track wiederholen"));
+      mp3.playFolderTrack(myFolder->folder, currentTrack);
+      _lastTrackFinished = track - 1;//im Einzelmodus ist mehrfaches Triggern von egal
+    }
+    else {
+      Serial.println(F("Einzel Modus aktiv -> Strom sparen"));
+      //    mp3.sleep();      // Je nach Modul kommt es nicht mehr zurück aus dem Sleep!
+      setstandbyTimer();
+    }
   }
   if (myFolder->mode == 5) {
     if (currentTrack != numTracksInFolder) {
@@ -739,6 +746,8 @@ void setup() {
   Serial.println(F("TonUINO Version 2.1"));
   Serial.println(F("created by Thorsten Voß and licensed under GNU/GPL."));
   Serial.println(F("Information and contribution at https://tonuino.de.\n"));
+  
+  Serial.println(F("Einzelmodus mit Endlosschleife by Gute_Laune .\n"));
 
   // Busy Pin
   pinMode(busyPin, INPUT);
@@ -1479,10 +1488,6 @@ bool setupFolder(folderSettings * theFolder) {
   //  // Hörbuchmodus -> Fortschritt im EEPROM auf 1 setzen
   //  EEPROM.update(theFolder->folder, 1);
 
-  // Einzelmodus -> Datei abfragen
-  if (theFolder->mode == 4)
-    theFolder->special = voiceMenu(mp3.getFolderTrackCount(theFolder->folder), 320, 0,
-                                   true, theFolder->folder);
   // Admin Funktionen
   if (theFolder->mode == 6) {
     //theFolder->special = voiceMenu(3, 320, 320);
@@ -1496,6 +1501,18 @@ bool setupFolder(folderSettings * theFolder) {
     theFolder->special2 = voiceMenu(mp3.getFolderTrackCount(theFolder->folder), 322, 0,
                                     true, theFolder->folder, theFolder->special);
   }
+  // Einzelmodus -> Datei abfragen
+  else if(theFolder->mode ==4){
+    theFolder->special = voiceMenu(mp3.getFolderTrackCount(theFolder->folder), 320, 0,
+                                   true, theFolder->folder);
+  // abspeichern ob Endloswiedergabe oder nicht
+  theFolder->special2 = voiceMenu(2, 323, 323, false, 0); //Soll die Datei in Endlosschleife laufen
+  }
+  else{
+    theFolder->special = 0;
+    theFolder->special2 = 0;
+  }
+  
   return true;
 }
 
@@ -1805,4 +1822,3 @@ bool checkTwo ( uint8_t a[], uint8_t b[] ) {
   }
   return true;
 }
-//test
