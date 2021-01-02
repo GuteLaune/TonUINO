@@ -6,7 +6,7 @@ Die DIY Musikbox (nicht nur) für Kinder
 - Stumm durch 3-Tastencombo trotz Absicherung Adminmenü (https://discourse.voss.earth/t/stumm-durch-3-tastencombo-trotz-absicherung-adminmenue-menue/6168)
 
 ### Features
-- Status LED an D6, an wenn TonUINO bereit zum ABspielen, aus wenn Standby-Timer abgelaufen
+- Status LED an D6, an wenn TonUINO bereit zum Abspielen, aus wenn Standby-Timer abgelaufen
 - Timeout für das Adminmenü (https://discourse.voss.earth/t/timeout-fuer-das-adminmenue/6400)
 - Shortcuts für 5 Tasten
 
