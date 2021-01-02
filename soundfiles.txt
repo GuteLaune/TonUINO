@@ -57,9 +57,11 @@ mp3/0935_yes.mp3|Ja.
 mp3/0936_batch_cards_intro.mp3|OK, bitte lege nun nacheinander die Karten auf die Box. Ich werde die jeweilige Nummer vorher ansagen, damit du nicht durcheinander kommst. Zum Abbrechen einfach eine der Lautstärketasten drücken!
 mp3/0940_shortcut_into.mp3|Bitte wähle den Shortcut, den du konfigurieren möchtest, aus.
 mp3/0941_pause.mp3|Pausetaste
-mp3/0942_up.mp3|Vor- bzw. Lautertaste
-mp3/0943_down.mp3|Zurück- bzw. Leisertaste
+mp3/0942_lauterTaste.mp3|Lautertaste
+mp3/0943_leiserTaste.mp3|Leisertaste
 mp3/0944_startup.mp3|Shortcut beim Start festlegen
+mp3/0945_vorTaste.mp3|Vorwärtstaste
+mp3/0946_rueckTaste.mp3|Rückwärtstaste
 mp3/0960_timer_intro.mp3|Nach wievielen Minuten Leerlauf soll der TonUINO ausgeschaltet werden? Du brauchst hierfür aber eine entsprechenden Schaltung.
 mp3/0961_timer_5.mp3|5 Minuten.
 mp3/0962_timer_15.mp3|15 Minuten.

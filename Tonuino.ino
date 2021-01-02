@@ -59,7 +59,11 @@ struct adminSettings {
   bool locked;
   long standbyTimer;
   bool invertVolumeButtons;
+#ifdef FIVEBUTTONS
+  folderSettings shortCuts[6];
+#else
   folderSettings shortCuts[4];
+#endif
   uint8_t adminMenuLocked;
   uint8_t adminMenuPin[4];
 };
@@ -158,6 +162,10 @@ void resetSettings() {
   mySettings.shortCuts[1].folder = 0;
   mySettings.shortCuts[2].folder = 0;
   mySettings.shortCuts[3].folder = 0;
+#ifdef FIVEBUTTONS
+  mySettings.shortCuts[4].folder = 0;
+  mySettings.shortCuts[5].folder = 0;
+#endif
   mySettings.adminMenuLocked = 0;
   mySettings.adminMenuPin[0] = 1;
   mySettings.adminMenuPin[1] = 1;
@@ -458,10 +466,10 @@ class RepeatSingleModifier: public Modifier {
       Serial.println(F("== RepeatSingleModifier::handleNext() -> REPEAT CURRENT TRACK"));
       delay(50);
       if (isPlaying()) return true;
-      if (myFolder->mode == 3 || myFolder->mode == 9){
+      if (myFolder->mode == 3 || myFolder->mode == 9) {
         mp3.playFolderTrack(myFolder->folder, queue[currentTrack - 1]);
       }
-      else{
+      else {
         mp3.playFolderTrack(myFolder->folder, currentTrack);
       }
       _lastTrackFinished = 0;
@@ -1014,21 +1022,22 @@ void loop() {
     }
 
     if (upButton.pressedFor(LONG_PRESS)) {
-#ifndef FIVEBUTTONS
       if (isPlaying()) {
+#ifndef FIVEBUTTONS
         if (!mySettings.invertVolumeButtons) {
           volumeUpButton();
         }
         else {
           nextButton();
         }
+#endif
       }
       else {
         playShortCut(1);
       }
       ignoreUpButton = true;
-#endif
-    } else if (upButton.wasReleased()) {
+    }
+    else if (upButton.wasReleased()) {
       if (!ignoreUpButton)
         if (!mySettings.invertVolumeButtons) {
           nextButton();
@@ -1040,20 +1049,22 @@ void loop() {
     }
 
     if (downButton.pressedFor(LONG_PRESS)) {
-#ifndef FIVEBUTTONS
       if (isPlaying()) {
+#ifndef FIVEBUTTONS
         if (!mySettings.invertVolumeButtons) {
           volumeDownButton();
         }
         else {
           previousButton();
         }
+#endif
       }
       else {
         playShortCut(2);
       }
       ignoreDownButton = true;
-#endif
+
+
     } else if (downButton.wasReleased()) {
       if (!ignoreDownButton) {
         if (!mySettings.invertVolumeButtons) {
@@ -1076,7 +1087,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(1);
+        playShortCut(4);
       }
     }
     if (buttonFive.wasReleased()) {
@@ -1089,7 +1100,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(2);
+        playShortCut(5);
       }
     }
 #endif
@@ -1239,7 +1250,11 @@ void adminMenu(bool fromCard = false) {
     }
   }
   else if (subMenu == 7) {
+#ifdef FIVEBUTTONS
+    uint8_t shortcut = voiceMenu(6, 940, 940);
+#else
     uint8_t shortcut = voiceMenu(4, 940, 940);
+#endif
     setupFolder(&mySettings.shortCuts[shortcut - 1]);
     mp3.playMp3FolderTrack(400);
   }
