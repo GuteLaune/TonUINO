@@ -18,7 +18,7 @@
 */
 
 // uncomment the below line to enable five button support
-#define FIVEBUTTONS
+//#define FIVEBUTTONS
 
 static const uint32_t cardCookie = 322417479;
 
@@ -747,7 +747,6 @@ void setup() {
   Serial.println(F("TonUINO Version 2.1"));
   Serial.println(F("created by Thorsten Voß and licensed under GNU/GPL."));
   Serial.println(F("Information and contribution at https://tonuino.de.\n"));
-  Serial.println(F("GuteLaune 6 Shortcuts"));
 
   // Busy Pin
   pinMode(busyPin, INPUT);
@@ -1030,7 +1029,7 @@ void loop() {
 #endif
       }
       else {
-        playShortCut(4);
+        playShortCut(1);
       }
       ignoreUpButton = true;
     }
@@ -1057,7 +1056,7 @@ void loop() {
 #endif
       }
       else {
-        playShortCut(5);
+        playShortCut(2);
       }
       ignoreDownButton = true;
 
@@ -1084,7 +1083,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(1);
+        playShortCut(4);
       }
     }
     if (buttonFive.wasReleased()) {
@@ -1097,7 +1096,7 @@ void loop() {
         }
       }
       else {
-        playShortCut(2);
+        playShortCut(5);
       }
     }
 #endif
