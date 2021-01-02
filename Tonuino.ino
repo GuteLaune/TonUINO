@@ -650,6 +650,8 @@ MFRC522::StatusCode status;
 #define buttonFivePin A4
 #endif
 
+#define LEDpin 6
+
 #define LONG_PRESS 1000
 
 Button pauseButton(buttonPause);
@@ -687,6 +689,7 @@ void checkStandbyAtMillis() {
   if (sleepAtMillis != 0 && millis() > sleepAtMillis) {
     Serial.println(F("=== power off!"));
     // enter sleep state
+    digitalWrite(LEDpin, LOW);
     digitalWrite(shutdownPin, HIGH);
     delay(500);
 
@@ -778,6 +781,7 @@ void setup() {
   pinMode(shutdownPin, OUTPUT);
   digitalWrite(shutdownPin, LOW);
 
+  pinMode(LEDpin, OUTPUT);
 
   // RESET --- ALLE DREI KNÖPFE BEIM STARTEN GEDRÜCKT HALTEN -> alle EINSTELLUNGEN werden gelöscht
   if (digitalRead(buttonPause) == LOW && digitalRead(buttonUp) == LOW &&
@@ -789,7 +793,7 @@ void setup() {
     loadSettingsFromFlash();
   }
 
-
+  digitalWrite(LEDpin, HIGH);
   // Start Shortcut "at Startup" - e.g. Welcome Sound
   playShortCut(3);
 }
