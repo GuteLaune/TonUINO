@@ -1311,10 +1311,12 @@ void adminMenu(bool fromCard = false) {
     // Invert Functions for Up/Down Buttons
     int temp = voiceMenu(2, 933, 933, false);
     if (temp == 2) {
-      mySettings.invertVolumeButtons = true;
-    }
-    else {
-      mySettings.invertVolumeButtons = false;
+      if (mySettings.invertVolumeButtons == false) {
+        mySettings.invertVolumeButtons = true;
+      }
+      else {
+        mySettings.invertVolumeButtons = false;
+      }
     }
   }
   else if (subMenu == 11) {
