@@ -4,6 +4,7 @@ Die DIY Musikbox (nicht nur) für Kinder
 ## Meine Software enthält folgende Bugfixes & Features
 ### Bugfixes
 - Stumm durch 3-Tastencombo trotz Absicherung Adminmenü (https://discourse.voss.earth/t/stumm-durch-3-tastencombo-trotz-absicherung-adminmenue-menue/6168)
+- Buttons werden im Adminmenü immer getauscht, wenn "Ja" gewählt wird und nie wenn "Nein" gewählt wird
 
 ### Features
 - Status LED an D6, an wenn TonUINO bereit zum Abspielen, aus wenn Standby-Timer abgelaufen
