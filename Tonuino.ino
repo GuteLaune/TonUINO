@@ -11,7 +11,6 @@
     | | | . |   |  |  |-   -| | | |  |  |
     |_| |___|_|_|_____|_____|_|___|_____| All-in-One
     TonUINO Version 2.2
-
     created by Thorsten Voß and licensed under GNU/GPL.
     Information and contribution at https://tonuino.de.
 */
@@ -646,6 +645,8 @@ MFRC522::StatusCode status;
 #define buttonFivePin A3
 #endif
 
+#define LEDpin 6
+
 #define LONG_PRESS 1000
 
 Button pauseButton(buttonPause);
@@ -771,6 +772,7 @@ void setup() {
   pinMode(buttonFourPin, INPUT_PULLUP);
   pinMode(buttonFivePin, INPUT_PULLUP);
 #endif
+  pinMode(LEDpin, OUTPUT);
 
   // RESET --- ALLE DREI KNÖPFE BEIM STARTEN GEDRÜCKT HALTEN -> alle EINSTELLUNGEN werden gelöscht
   if (digitalRead(buttonPause) == LOW && digitalRead(buttonUp) == LOW &&
@@ -782,6 +784,7 @@ void setup() {
     loadSettingsFromFlash();
   }
 
+  digitalWrite(LEDpin, HIGH);
 
   // Start Shortcut "at Startup" - e.g. Welcome Sound
   playShortCut(3);
