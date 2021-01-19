@@ -807,6 +807,7 @@ void setup() {
   Serial.println(F("TonUINO Version 2.1"));
   Serial.println(F("created by Thorsten Voß and licensed under GNU/GPL."));
   Serial.println(F("Information and contribution at https://tonuino.de.\n"));
+  Serial.println(F("Fork von Gute_Laune.\n"));
 
   // Busy Pin
   pinMode(busyPin, INPUT);

@@ -10,6 +10,7 @@ Die DIY Musikbox (nicht nur) für Kinder
 - Status LED an D6, an wenn TonUINO bereit zum Abspielen, aus wenn Standby-Timer abgelaufen
 - Timeout für das Adminmenü (https://discourse.voss.earth/t/timeout-fuer-das-adminmenue/6400)
 - Shortcuts für 5 Tasten
+- Neuer Modifier: Hörspielauswahl
 
 # Change Log
 
