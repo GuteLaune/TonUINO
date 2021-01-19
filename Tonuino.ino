@@ -484,6 +484,63 @@ class RepeatSingleModifier: public Modifier {
     }
 };
 
+class HoerspielauswahlMode: public Modifier {
+  private:
+    uint16_t eingabeTrack = 0;
+
+  public:
+    void loop() {
+      //Modifier löschen
+      //delay(500);
+      //mp3.playAdvertisement(261);
+      activeModifier = NULL;
+      Serial.println(F("modifier removed"));
+    }
+    HoerspielauswahlMode(void) {
+      //Wiedergabe pausieren
+      mp3.pause();
+      knownCard = false;
+      delay(1000);// warten bis der Player wieder zuhört
+      //prüfen ob der Hörspielmodus aktiviert ist
+      if (myFolder->mode != 1 && myFolder->mode != 7) {
+        //spiele 500
+        Serial.println(F("kein Hörspiel"));
+        mp3.playMp3FolderTrack(500);
+        waitForTrackToFinish();
+        Serial.println(F("Weiter"));
+      }
+      else {
+        Serial.println(F("=== HoerspielauswahlMode()"));
+        //myFolder->folder = //aktueller Ordner
+        //Serial.print(F("aktueller Ordner:  "));
+        //Serial.println(myFolder->folder);
+        //myFolder->mode = 1 //Hörspielmodus
+        //Serial.println(F("HoerspielModus()"));
+        if (myFolder->mode == 7) {
+          eingabeTrack = voiceMenu((myFolder->special2), 320, 0,
+                                   true, myFolder->folder, myFolder->special - 1, true) ;
+        }
+        else {
+          eingabeTrack = voiceMenu(mp3.getFolderTrackCount(myFolder->folder), 320, 0,
+                                   true, myFolder->folder, currentTrack, true);
+        }
+        if (eingabeTrack != 0)
+        {
+          currentTrack = eingabeTrack;
+        }
+        Serial.print(F("gewählter Track:  "));
+        Serial.println(currentTrack);
+        Serial.println(F("Hörspielmodus -> ausgewählten Track wiedergeben"));
+      }    
+      knownCard = true;  
+      mp3.playFolderTrack(myFolder->folder, currentTrack);
+    }
+    uint8_t getActive() {
+      Serial.println(F("== HoerspielauswahlMode::getActive()"));
+      return 7;
+    }
+};
+    
 // An modifier can also do somethings in addition to the modified action
 // by returning false (not handled) at the end
 // This simple FeedbackModifier will tell the volume before changing it and
@@ -1217,7 +1274,7 @@ void adminMenu(bool fromCard = false) {
     tempCard.nfcFolderSettings.folder = 0;
     tempCard.nfcFolderSettings.special = 0;
     tempCard.nfcFolderSettings.special2 = 0;
-    tempCard.nfcFolderSettings.mode = voiceMenu(6, 970, 970, false, false, 0, true);
+    tempCard.nfcFolderSettings.mode = voiceMenu(7, 970, 970, false, false, 0, true);
 
     if (tempCard.nfcFolderSettings.mode != 0) {
       if (tempCard.nfcFolderSettings.mode == 1) {
@@ -1392,7 +1449,7 @@ uint8_t voiceMenu(int numberOfOptions, int startMessage, int messageOffset,
             mp3.playMp3FolderTrack(802);                  //802- "OK, ich habe den Vorgang abgebrochen.
               //ignorePauseButton = true;
               setstandbyTimer(); 
-              return defaultValue;  
+              return returnValue;  
            }
 
 
@@ -1760,7 +1817,7 @@ bool readCard(nfcTagObject * nfcTag) {
         case 4: activeModifier = new ToddlerMode(); break;
         case 5: activeModifier = new KindergardenMode(); break;
         case 6: activeModifier = new RepeatSingleModifier(); break;
-
+        case 7: activeModifier = new HoerspielauswahlMode(); break;
       }
       delay(2000);
       return false;
